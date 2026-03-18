@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link href="./output.css" rel="stylesheet">
+    <title>Uwaga! Bezpieczeństwo</title>
+</head>
+<body class="bg-red-600 flex items-center justify-center min-h-screen text-white p-6">
+    <div class="max-w-3xl w-full">
+        <h1 class="text-6xl font-black mb-6 animate-pulse">UPS! TWOJE HASŁO ZOSTAŁO WŁAŚNIE SKRADZIONE. 😱</h1>
+        <p class="text-2xl mb-12 opacity-90 font-light">Spokojnie, to tylko projekt edukacyjny. Ale w prawdziwym świecie Twoje dane byłyby już na czarnym rynku.</p>
+        
+        <div class="grid md:grid-cols-2 gap-8 text-left">
+            <div class="bg-white/10 p-8 rounded-3xl backdrop-blur-md">
+                <h3 class="text-xl font-bold mb-4">Co się właśnie stało?</h3>
+                <p class="text-sm opacity-80 leading-relaxed">Użyłem techniki <strong>Phishingu</strong>. Strona wyglądała identycznie jak prawdziwy bank, ale dane zamiast do banku, trafiły do mojego panelu administratora obok.</p>
+            </div>
+            <div class="bg-white/10 p-8 rounded-3xl backdrop-blur-md">
+                <h3 class="text-xl font-bold mb-4">Jak tworzyć mocne hasła?</h3>
+                <ul class="text-sm space-y-3 opacity-80">
+                    <li>✅ Stosuj min. 14 znaków (Długość > Skomplikowanie)</li>
+                    <li>✅ Używaj zdań jako haseł (np. <i>LubieMojaPizzeZAnanasem!</i>)</li>
+                    <li>✅ <strong>Najważniejsze:</strong> Włącz 2FA (Klucze U2F / Google Authenticator)</li>
+                </ul>
+            </div>
+        </div>
+        <button onclick="window.location.href='/'" class="mt-12 bg-white text-red-600 px-8 py-4 rounded-full font-black hover:bg-opacity-90 transition">Zrozumiałem, wróć do startu</button>
+    </div>
+</body>
+</html>

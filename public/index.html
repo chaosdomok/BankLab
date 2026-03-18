@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="./output.css" rel="stylesheet">
+    <title>SafeBank Mobile</title>
+    <style>
+        /* Efekt "pływania" tła dla nowoczesnego wyglądu */
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans antialiased overflow-hidden">
+    <div class="h-6 w-full flex justify-between px-4 items-center text-[10px] text-slate-400 font-bold">
+        <span>12:45</span>
+        <div class="flex gap-1">
+            <span>LTE</span>
+            <div class="w-4 h-2 border border-slate-400 rounded-sm"></div>
+        </div>
+    </div>
+
+    <div class="flex flex-col h-screen max-w-md mx-auto">
+        <div class="p-8 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600 text-white text-3xl font-black shadow-xl mb-4">S</div>
+            <h1 class="text-2xl font-black text-slate-800 tracking-tight">SafeBank <span class="text-blue-600">Mobile</span></h1>
+        </div>
+
+        <div class="flex-1 bg-white rounded-t-[40px] shadow-[0_-10px_40px_rgba(0,0,0,0.05)] p-8">
+            <form id="loginForm" class="space-y-6 mt-4">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 uppercase ml-1">E-mail / Login</label>
+                    <input type="email" id="email" required 
+                           class="w-full bg-slate-100 border-none rounded-2xl px-6 py-4 text-slate-800 focus:ring-2 focus:ring-blue-500 transition-all outline-none" 
+                           placeholder="jan.kowalski@mail.pl">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 uppercase ml-1">Hasło</label>
+                    <input type="password" id="password" required 
+                           class="w-full bg-slate-100 border-none rounded-2xl px-6 py-4 text-slate-800 focus:ring-2 focus:ring-blue-500 transition-all outline-none" 
+                           placeholder="••••••••">
+                </div>
+                
+                <div class="pt-4">
+                    <button type="submit" 
+                            class="w-full gradient-bg text-white py-5 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 active:scale-95 transition-all">
+                        Zaloguj się
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-8 flex justify-between text-sm text-blue-600 font-medium px-2">
+                <span>Zapomniałem hasła</span>
+                <span>Aktywuj aplikację</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').onsubmit = async (e) => {
+            e.preventDefault();
+            // Mała animacja ładowania przed wysłaniem
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = '<span class="animate-spin inline-block mr-2">◌</span> Łączenie...';
+            
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ 
+                        email: document.getElementById('email').value, 
+                        password: document.getElementById('password').value 
+                    })
+                });
+                const data = await res.json();
+                if(data.redirect) window.location.href = data.redirect;
+            } catch (err) {
+                alert("Błąd sieci. Spróbuj ponownie.");
+                btn.innerText = 'Zaloguj się';
+            }
+        };
+    </script>
+</body>
+</html>

